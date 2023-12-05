@@ -21,11 +21,11 @@
 uint32_t currentspeed = 0;
 
 Servo steerServo;
-//------------------------------------------------------------------------------------------------
-const char* ssid     = "D-Link"; //Router Name
-const char* password = "12345678";  //Router Password
-IPAddress server(192,168,1,2); //IP Address of ROS Master Device (Raspberry pi)
-//------------------------------------------------------------------------------------------------
+
+const char* ssid     = "WE_B244C9"; //Router Name
+const char* password = "j9c06147";  //Router Password
+
+IPAddress server(192,168,1,13); //IP Address of ROS Master Device (Raspberry pi)
 const uint16_t serverPort = 11411;
 
 ros::NodeHandle nh; //Definition of ROS handle
@@ -86,7 +86,7 @@ void DCMotor(void * parameters){
           digitalWrite(Motor1en2, LOW);
           digitalWrite(Motor2en2, LOW);  
   }                
-  vTaskDelay(100 / portTICK_PERIOD_MS);
+  vTaskDelay(500 / portTICK_PERIOD_MS);
   }
 }
 
@@ -97,7 +97,7 @@ void KeepWiFiAlive( void * parameters)
 for(;;){
 if(WiFi.status() == WL_CONNECTED)
 {
-Serial.println("Wifi still connected");
+// Serial.println("Wifi still connected");
 // Serial.println(WiFi.localIP());     
 vTaskDelay(5000/ portTICK_PERIOD_MS);
 continue;
@@ -127,7 +127,6 @@ Serial.println(WiFi.localIP());
 
 void setup() {
 Serial.begin(115200);
-
 steerServo.attach(Servopin);
 steerServo.write(90);
 
@@ -179,6 +178,6 @@ NULL,
 void loop() {
 
   nh.spinOnce();
-  delay(100);
+  delay(500);
 
 }
