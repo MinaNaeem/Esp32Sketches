@@ -1,5 +1,5 @@
 #include <ESP32Servo.h>
-#define servopin 26
+#define servopin 4
 Servo myservo;
 void setup() {
   // put your setup code here, to run once:
