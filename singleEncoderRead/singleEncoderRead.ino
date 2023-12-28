@@ -13,6 +13,7 @@
    
 volatile uint32_t pos = 0;
 
+
 void IRAM_ATTR readFunction(){
 if(digitalRead(enphaseB) > 0) pos++;
 else pos--;
@@ -26,6 +27,7 @@ pinMode(enphaseB, INPUT_PULLUP);
 attachInterrupt(enphaseA, readFunction, FALLING);
 Serial.begin(115200);
 delay(1000);
+
 
 }
 
