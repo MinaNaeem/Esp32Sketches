@@ -5,7 +5,7 @@ from std_msgs.msg import Int32
 
 def publisher():
     # Initialize the ROS node with a unique name
-    rospy.init_node('string_publisher', anonymous=True)
+    rospy.init_node('publisher', anonymous=True)
 
     # Create a publisher object
     pub = rospy.Publisher('cmd_angle', Int32, queue_size=10)
