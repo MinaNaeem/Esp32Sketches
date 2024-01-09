@@ -18,11 +18,11 @@
 //------------------------Globals-----------------------------------------------------
 volatile uint32_t prevT = 0;
 volatile int reading = 0;
-int vel = 0;
+float vel = 0;
 //------------------------------------------------------------------------------------
 
 void IRAM_ATTR readFunction(){
-if(digitalRead(enphaseB) > 0) reading++;
+if(digitalRead(enphaseB) == HIGH) reading++;
 else reading--;
 }
 
@@ -31,9 +31,9 @@ void setup() {
 pinMode(enphaseA, INPUT_PULLUP);
 pinMode(enphaseB, INPUT_PULLUP);
 
-attachInterrupt(enphaseA, readFunction, FALLING);
+attachInterrupt(enphaseA, readFunction, RISING);
 Serial.begin(115200);
-delay(1000);
+while(!Serial){}
 
 Serial.println("Program Started Successfully!");
 prevT = millis();
@@ -44,25 +44,23 @@ if(millis() - prevT > TIMESAMPLE)
 {
 detachInterrupt(enphaseA);
 vel = float(reading) / (TicksPerRev * TIMESAMPLE);
-reading = 0;
-attachInterrupt(enphaseA, readFunction, FALLING);
-prevT = millis();
-}
 if(vel > 0)
 {
   Serial.print("Velocity of Encoder is ");
   Serial.print(fabs(vel));
   Serial.print(" encoderRev/s Positive Direction,\t");
   Serial.print(fabs(GearRatio*vel*60.0));
-  Serial.println(" Motor Rev per minute");
-
+  Serial.println(" Motor Rev per Minute");
 }
 else{
-  Serial.print("velocity of Encoder is ");
+  Serial.print("Velocity of Encoder is ");
   Serial.print(fabs(vel));
   Serial.print(" encoderRev/s Negative Direction,\t");
   Serial.print(fabs(GearRatio*vel*60.0));
-  Serial.println(" Motor Rev per minute");
+  Serial.println(" Motor Rev per Minute");
 }
-delay(100);  //so you can read the serial monitor
+reading = 0;
+attachInterrupt(enphaseA, readFunction, FALLING);
+prevT = millis();
+}
 }

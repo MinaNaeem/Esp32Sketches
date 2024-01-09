@@ -20,13 +20,13 @@ volatile uint32_t pos2 = 0;
 
 
 void IRAM_ATTR readEncoder1(){
-if(digitalRead(en1B) > 0) pos1++;
+if(digitalRead(en1B) == HIGH) pos1++;
 else pos1--;
 }
 
 
 void IRAM_ATTR readEncoder2(){
-if(digitalRead(en2B) > 0) pos2++;
+if(digitalRead(en2B) == HIGH) pos2++;
 else pos2--;
 }
 
@@ -35,13 +35,13 @@ void setup() {
 #ifdef encoder1
   pinMode(en1A, INPUT_PULLUP);
   pinMode(en1B, INPUT_PULLUP);
-  attachInterrupt(en1A, readEncoder1, FALLING);
+  attachInterrupt(en1A, readEncoder1, RISING);
 #endif
 
 #ifdef encoder2
   pinMode(en2A, INPUT_PULLUP);
   pinMode(en2B, INPUT_PULLUP);
-  attachInterrupt(en1B, readEncoder2, FALLING);
+  attachInterrupt(en1B, readEncoder2, RISING);
 #endif
 
 Serial.begin(115200);
@@ -55,7 +55,7 @@ Serial.print("Position of Encoder1 is ");
 Serial.println(pos1);
 
 Serial.print("Position of Encoder2 is ");
-Serial.println(pos1);
+Serial.println(pos2);
 
 delay(100);   //so you can read the serial monitor
 }
