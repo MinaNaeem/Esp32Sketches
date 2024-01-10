@@ -38,7 +38,7 @@ previous = millis();
 void loop() {
   // put your main code here, to run repeatedly:
 ledcWrite(freqChannel, 127);
-if(millis()-previous > 1000)
+if(millis()-previous >= 1000)
 {
   Serial.print("Frequency = ");
   Serial.print(counter);

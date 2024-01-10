@@ -40,23 +40,23 @@ prevT = millis();
 }
 
 void loop() {
-if(millis() - prevT > TIMESAMPLE)
+if(millis() - prevT >= TIMESAMPLE)
 {
 detachInterrupt(enphaseA);
 vel = float(reading) / (TicksPerRev * TIMESAMPLE);
-if(vel > 0)
+if(vel >= 0)
 {
   Serial.print("Velocity of Encoder is ");
   Serial.print(fabs(vel));
   Serial.print(" encoderRev/s Positive Direction,\t");
-  Serial.print(fabs(GearRatio*vel*60.0));
+  Serial.print(fabs(vel/GearRatio * 60.0));
   Serial.println(" Motor Rev per Minute");
 }
 else{
   Serial.print("Velocity of Encoder is ");
   Serial.print(fabs(vel));
   Serial.print(" encoderRev/s Negative Direction,\t");
-  Serial.print(fabs(GearRatio*vel*60.0));
+  Serial.print(fabs(vel/(GearRatio*60.0)));
   Serial.println(" Motor Rev per Minute");
 }
 reading = 0;
