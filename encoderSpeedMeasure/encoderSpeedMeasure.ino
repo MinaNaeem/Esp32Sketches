@@ -22,7 +22,7 @@ float vel = 0;
 //------------------------------------------------------------------------------------
 
 void IRAM_ATTR readFunction(){
-if(digitalRead(enphaseB) == HIGH) reading++;
+if(digitalRead(enphaseB) == LOW) reading++;
 else reading--;
 }
 
@@ -56,11 +56,11 @@ else{
   Serial.print("Velocity of Encoder is ");
   Serial.print(fabs(vel));
   Serial.print(" encoderRev/s Negative Direction,\t");
-  Serial.print(fabs(vel/(GearRatio*60.0)));
+  Serial.print(fabs(vel/GearRatio * 60.0));
   Serial.println(" Motor Rev per Minute");
 }
 reading = 0;
-attachInterrupt(enphaseA, readFunction, FALLING);
+attachInterrupt(enphaseA, readFunction, RISING);
 prevT = millis();
 }
 }

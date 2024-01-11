@@ -19,21 +19,21 @@
 #define Forward 1
 #define Reverse -1
 
-volatile uint32_t pos1 = 0;
-uint32_t prevPos1 = 0;
-volatile uint32_t pos2 = 0;
-uint32_t prevPos2 = 0;
+volatile int32_t pos1 = 0;
+int32_t prevPos1 = 0;
+volatile int32_t pos2 = 0;
+int32_t prevPos2 = 0;
 unsigned long long prevT = 0;
 
 int kp = 1;
 
 void IRAM_ATTR readEncoder1(){
-if(digitalRead(en1B) == HIGH) pos1++;
+if(digitalRead(en1B) == LOW) pos1++;
 else pos1--;
 }
 
 void IRAM_ATTR readEncoder2(){
-if(digitalRead(en2B) == HIGH) pos2++;
+if(digitalRead(en2B) == LOW) pos2++;
 else pos2--;
 }
 
@@ -68,7 +68,7 @@ pinMode(en2A, INPUT_PULLUP);
 pinMode(en2B, INPUT_PULLUP);
 
 attachInterrupt(en1A, readEncoder1, RISING);
-attachInterrupt(en1B, readEncoder2, RISING);
+attachInterrupt(en2A, readEncoder2, RISING);
 
 ledcSetup(pwmChannel, freq, resolution);
 ledcAttachPin(Rmotorpwm, pwmChannel);

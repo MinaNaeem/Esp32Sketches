@@ -1,5 +1,5 @@
-/*This code isn't tested yet*/
-#define encoder1 //define your used encoder        
+/*This code is tested and Working*/
+#define encoder2 //define your used encoder        
 
 #ifdef encoder1
   #define enphaseA 23
@@ -11,11 +11,12 @@
   #define enphaseB 5
 #endif 
    
-volatile uint32_t pos = 0;
+volatile int32_t pos = 0;
 
 
 void IRAM_ATTR readFunction(){
-if(digitalRead(enphaseB) == HIGH) pos++;
+  
+if(digitalRead(enphaseB) == LOW) pos++;
 else pos--;
 }
 
@@ -36,5 +37,5 @@ void loop() {
 Serial.print("Position of Encoder is ");
 Serial.println(pos);
 
-delay(100);  //so you can read the serial monitor
+delay(50);  //so you can read the serial monitor
 }
